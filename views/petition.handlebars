@@ -1,0 +1,36 @@
+
+
+
+
+    <form method="POST">
+        <div>
+            <p>First Name</p>
+            <input type="text" name="first" placeholder="First Name">
+        </div>
+
+        <div>
+            <p>Last Name</p>
+            <input type="text" name="last">
+        </div>
+
+
+        <input type="hidden" id="signature" name="signature">
+
+        <div>
+            <canvas id="signatureCanvas" width="600" height="150" style="border: 2px solid black;"></canvas>
+
+        </div>
+
+        <div>
+            <input type="button" value="Reset" id="resetSignature">
+        </div>
+
+        <div>
+            <button>Submit</button>
+        </div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="js/canvasSignature.js"></script>
+<script src="js/petitionPost.js"></script>
+
