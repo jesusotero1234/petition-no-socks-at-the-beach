@@ -1,0 +1,171 @@
+header {
+    background-color:  #f1f3f4;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+}
+
+body {
+    margin: 0;
+    background-color: #79bac1;
+}
+#petition-container{
+    display: flex;
+     flex-direction:column;
+    justify-content: center;
+   
+}
+footer {
+    background-color: #512b58;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    
+}
+#logo{
+    width: 200px;
+    height: 200px; 
+}
+#logo-container{
+    display:  flex;
+    justify-content:center;
+    margin-top: 50px;
+}
+h1{
+    display: block;
+    font-family: 'Odibee Sans';
+    letter-spacing: 4px;
+}
+p{
+   font-family: 'Prompt', sans-serif;
+    letter-spacing: 4px;
+}
+form{
+    display: flex;
+flex-direction: column;
+align-items: center;
+    text-align: center;
+}
+button{
+    width: 100px;
+    height: 25px;
+    border-radius: 15%;
+}
+#button-containers{
+    display: flex;
+    flex-direction:row-reverse;
+    justify-content:space-evenly;
+    width: 100%;
+    margin-top: 30px;
+}
+.names{
+    display:  flex;
+    margin-top: 50px;
+}header {
+    background-color:  #f1f3f4;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+}
+
+body {
+    margin: 0;
+    background-color: #79bac1;
+}
+#petition-container{
+    display: flex;
+     flex-direction:column;
+    justify-content: center;
+   
+}
+footer {
+    background-color: #512b58;
+    text-align: center;
+}
+#logo{
+    width: 200px;
+    height: 200px; 
+}
+#logo-container{
+    display:  flex;
+    justify-content:center;
+    margin-top: 50px;
+}
+h1{
+    display: block;
+    font-family: 'Odibee Sans';
+    letter-spacing: 4px;
+}
+p{
+   font-family: 'Prompt', sans-serif;
+    letter-spacing: 4px;
+}
+form{
+    display: flex;
+flex-direction: column;
+align-items: center;
+    text-align: center;
+}
+button{
+    width: 100px;
+    height: 25px;
+    border-radius: 15%;
+}
+#button-containers{
+    display: flex;
+    flex-direction:row-reverse;
+    justify-content:space-evenly;
+    width: 100%;
+    margin-top: 30px;
+}
+.names{
+    display:  flex;
+    margin-top: 50px;
+}
+.names>div{
+    margin-right: 50px;
+}
+#petition-explain{
+    text-align: center;
+}
+canvas{
+    border-style:dotted;
+}
+#thanks{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.names>div{
+    margin-right: 50px;
+}
+#petition-explain{
+    text-align: center;
+}
+canvas{
+    border-style:dotted;
+}
+#thanks{
+    display: flex;
+    flex-direction: column;
+   align-items: center;
+    text-align: center;
+}
+#link{
+    font-size: 50px;
+}
+#img-signature{
+    border-style:dashed;
+}
+#footer-text{
+    color: white;
+    font-size: 20px;
+}
+#signers-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -1,27 +1,32 @@
+// first Name Initial Value
+$('input[name="first"]').val('');
 
+//last Name Initial Value  =
+$('input[name="last"]').val('');
+
+//signature Initial Value
+$('input[name="signature"]').val('');
 
 //when Submit is clicked
-$('button').on('click',()=>{
-
+$('button').on('click', () => {
     //get values of the inputs
-
     //first name
-    const firstName = $('input[name="first"]').val()
-    
-    //last name
-    const lastName = $('input[name="last"]').val()
+    const firstName = $('input[name="first"]').val();
 
+    //last name
+    const lastName = $('input[name="last"]').val();
 
     //signature
-    const signature = $('input[name="signature"]').val()
-    
+    const signature = $('input[name="signature"]').val();
     //condition to send to the DB
 
-    if(firstName.trim().length>0 && lastName.trim().length>0 && signature.trim().length>0){
-        console.log('All conditions passed')
+    if (
+        (firstName.trim().length > 0) &
+        (lastName.trim().length > 0) &
+        (signature.trim().length > 0)
+    ) {
+        console.log('All conditions passed');
+    } else {
+        
     }
-
-})
-
-
-
+});

@@ -1,36 +1,44 @@
+<div id="petition-container">
 
-
-
-
+<div id="petition-explain">
+<p>Please sign the petition to support the BAN of sandals with socks in the whole Germany</p>
+<p>After we reach 100K we will move on to the whole Europe!</p>
+<h1>LET'S FIGHT TOGETHER</h1>
+</div>
     <form method="POST">
-        <div>
-            <p>First Name</p>
-            <input type="text" name="first" placeholder="First Name">
+
+        <div class="names">
+
+            <div>
+                <p>First Name</p>
+                <input type="text" name="first" placeholder="First Name">
+            </div>
+
+
+            <div>
+                <p>Last Name</p>
+                <input type="text" name="last" placeholder="Last Name">
+            </div>
         </div>
 
-        <div>
-            <p>Last Name</p>
-            <input type="text" name="last">
-        </div>
 
-
+        <p>{{error}}</p>
         <input type="hidden" id="signature" name="signature">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
         <div>
-            <canvas id="signatureCanvas" width="600" height="150" style="border: 2px solid black;"></canvas>
+            <canvas id="signatureCanvas" width="600" height="150" ></canvas>
 
         </div>
 
-        <div>
-            <input type="button" value="Reset" id="resetSignature">
-        </div>
+        <div id="button-containers">
+            <button id="resetSignature">Reset</button>
 
-        <div>
             <button>Submit</button>
         </div>
+    </form>
 
-
+</div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="js/canvasSignature.js"></script>
 <script src="js/petitionPost.js"></script>
-

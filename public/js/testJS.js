@@ -1,3 +1,5 @@
-const obj = {}
-obj
-if(Object.entries(obj).length == 0/*?*/){console.log('no')}
+const secrets = require('../../secrets.json')//?
+
+secrets
+
+Object.values(secrets)//?
