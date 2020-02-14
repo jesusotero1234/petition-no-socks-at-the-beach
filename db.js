@@ -10,7 +10,7 @@ const db = spicePg('postgres://postgres:postgres@localhost:5432/petition')
 exports.addUser = function(firstName, lastName, signature) {
     return db.query(
         `INSERT INTO userInfo (firstName, lastName, signature)
-        VALUES ($2, $1, $3)`,
+        VALUES ($2, $1, $3) RETURNING id`,
         [firstName, lastName, signature]
     )
 }
@@ -23,3 +23,10 @@ exports.returnInfo = function() {
     )
 }
 
+
+//Retrieve Signature
+exports.userInfo = function(id) {
+    return db.query(
+        `SELECT firstName, lastName, signature FROM userInfo WHERE id =$1`,[id]
+    )
+}

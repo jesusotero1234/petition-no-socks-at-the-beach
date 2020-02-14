@@ -1,6 +1,12 @@
 <div>
-
-    <p>Thank you for the support, now you can see how many people has signed in the link below</p>
-    <a href="/signers">link</a>
+    {{#data}}
+    <p>Thank you for the support <b>{{firstname}} {{lastname}}</b></p>
     
+    <img src="{{signature}}" alt="signature">
+    
+    
+    {{/data}}
 </div>
+
+<p> now you can see how many people has signed in the link below</p>
+<a href="/signers">link</a>
