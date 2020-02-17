@@ -45,3 +45,5 @@ exports.logIn =function(email) {
         `SELECT email,password,id FROM userInfo WHERE email=$1`,[email]
     )
 }
+
+//checkIfSigned

@@ -46,11 +46,6 @@ app.use(function(req, res, next) {
     ) {
         res.redirect('/register');
     } else {
-        // if (req.url == 'login') {
-        //     console.log('test')
-        //     res.redirect('/thanks');
-        //     return;
-        // }
         res.locals.csrfToken = req.csrfToken();
         next();
     }
@@ -122,7 +117,15 @@ app.post('/login', (req, res) => {
                 .then(boolean => {
                     if (boolean) {
                         req.session.userId = rows[0].id;
-                        res.redirect('/thanks');
+                        userInfo(req.session.userId).then(({rows})=>{
+                            if(rows.length == 0){
+                                console.log('entered')
+                                res.redirect('/petition');
+                            }else{
+                                console.log('entered2')
+                                res.redirect('/thanks');}
+                        }).catch(err=>console.log(err))
+                        
                     } else {
                         res.render('login', {
                             layout: 'main',
