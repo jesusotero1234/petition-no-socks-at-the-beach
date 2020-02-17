@@ -1,17 +1,14 @@
+<div id="signers-container">
+    <p>Signers so far:</p>
 
 
+    {{#rows}}
+    <table>
+        <tr>
+            <td>{{firstname}}</td>
+            <td>{{lastname}}</td>
+        </tr>
 
-<div id="signers-container"></div>
-<p>Signers so far:</p>
-
-
-{{#rows}}
-<table>
-    <tr>
-        <td>{{firstname}}</td>
-        <td>{{lastname}}</td>
-    </tr>
-
-</table>
-{{/rows}}
+    </table>
+    {{/rows}}
 </div>

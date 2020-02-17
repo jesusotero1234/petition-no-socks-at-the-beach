@@ -6,17 +6,25 @@ const db = spicePg('postgres://postgres:postgres@localhost:5432/petition')
 
 
 //Insert User information
-
-exports.addUser = function(firstName, lastName, signature) {
+exports.addUserUserInfo = function(firstName, lastName, email,password) {
     return db.query(
-        `INSERT INTO userInfo (firstName, lastName, signature)
-        VALUES ($1, $2, $3) RETURNING id`,
-        [firstName, lastName, signature]
+        `INSERT INTO userInfo (firstName, lastName, email,password)
+        VALUES ($1, $2, $3,$4) RETURNING id`,
+        [firstName, lastName, email,password]
     )
 }
 
-//Retrieve UsersInfo
+//Save Signature
+exports.saveSignature = function(signature,user_id) {
+    return db.query(
+        `INSERT INTO signatures (signature, user_id)
+        VALUES ($1, $2)`,
+        [signature,user_id]
+    )
+}
 
+
+//Retrieve UsersInfo
 exports.returnInfo = function() {
     return db.query(
         `SELECT firstName, lastName FROM userInfo`
@@ -27,6 +35,13 @@ exports.returnInfo = function() {
 //Retrieve Signature
 exports.userInfo = function(id) {
     return db.query(
-        `SELECT firstName, lastName, signature FROM userInfo WHERE id =$1`,[id]
+        `SELECT userInfo.firstName, userInfo.lastName, signatures.signature FROM userInfo LEFT JOIN signatures ON userInfo.id = signatures.user_id WHERE signatures.user_id=$1`,[id]
+    )
+}
+
+//LogIn
+exports.logIn =function(email) {
+    return db.query(
+        `SELECT email,password,id FROM userInfo WHERE email=$1`,[email]
     )
 }

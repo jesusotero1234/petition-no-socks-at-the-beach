@@ -1,0 +1,31 @@
+<div id="login-container">
+
+
+    <form method="POST">
+
+        <div class="logInInfo">
+            <p>{{error}}</p>
+            <div>
+                <p>Email</p>
+                <input type="text" name="email" placeholder="email">
+            </div>
+
+            <div>
+                <p>Password</p>
+                <input type="password" name="password" placeholder="password">
+            </div>
+        </div>  
+
+
+
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+
+        <div id="button-login">
+
+            <button>Log In</button>
+        </div>
+    </form>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

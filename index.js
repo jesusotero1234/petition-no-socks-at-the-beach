@@ -2,9 +2,15 @@ const express = require('express');
 const hb = require('express-handlebars');
 const cookieSession = require('cookie-session');
 const csurf = require('csurf');
-const secrets = require('./secrets.json')
-
-const { addUser, returnInfo, userInfo } = require('./db'); //?
+const secrets = require('./secrets.json');
+const {
+    addUserUserInfo,
+    returnInfo,
+    userInfo,
+    saveSignature,
+    logIn
+} = require('./db'); //?
+const { hash, compare } = require('./utils/bCrypts');
 
 const app = express();
 
@@ -35,18 +41,110 @@ app.use(function(req, res, next) {
     if (
         Object.keys(req.session).length == 1 &&
         Object.keys(req.session) == 'csrfSecret' &&
-        req.url != '/petition'
+        req.url != '/register' &&
+        req.url != '/login'
     ) {
-        res.redirect('/petition');
+        res.redirect('/register');
     } else {
+        // if (req.url == 'login') {
+        //     console.log('test')
+        //     res.redirect('/thanks');
+        //     return;
+        // }
         res.locals.csrfToken = req.csrfToken();
         next();
     }
 });
 
+app.get('/register', (req, res) => {
+    res.render('register', {
+        layout: 'main',
+        error: ''
+    });
+});
+
+app.post('/register', (req, res) => {
+    //take the password from the form
+    console.log(req.body);
+    if (
+        req.body.firstName.trim().length == 0 ||
+        req.body.lastName == 0 ||
+        req.body.email == 0 ||
+        req.body.password == 0
+    ) {
+        res.render('register', {
+            layout: 'main',
+            error:
+                'Looks like you have an error, please fill all the information and sign before Submit'
+        });
+        return;
+    }
+    //hash it
+    hash(req.body.password)
+        .then(hashedpass => {
+            addUserUserInfo(
+                req.body.firstName,
+                req.body.lastName,
+                req.body.email,
+                hashedpass
+            )
+                .then(({ rows }) => {
+                    console.log('should not been save');
+                    req.session.userId = rows[0].id;
+                    res.redirect('/petition');
+                    res.sendStatus(200);
+                })
+                .catch(err => {
+                    console.log(err);
+                    // res.sendStatus(400);
+                });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    //send the password and email to the database
+});
+
+app.get('/login', (req, res) => {
+    res.render('login', {
+        layout: 'main',
+        error: ''
+    });
+});
+
+app.post('/login', (req, res) => {
+    //compare the password and look with the email and Id
+    
+    if (req.body.email.trim().length > 0 && req.body.password.trim().length > 0) {
+        // console.log(req.body.email)
+        logIn(req.body.email).then(({ rows }) => {
+            compare(req.body.password, rows[0].password)
+                .then(boolean => {
+                    if (boolean) {
+                        req.session.userId = rows[0].id;
+                        res.redirect('/thanks');
+                    } else {
+                        res.render('login', {
+                            layout: 'main',
+                            error: 'Your username or password is incorrect'
+                        });
+                    }
+                    //if it's true  then redirect to petition and store the cookie, if it's not true trigger an Error message
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }).catch(err=>console.log(err));
+    } else {
+        res.render('login', {
+            layout: 'main',
+            error: 'Your username or password is incorrect'
+        });
+    }
+});
+
 app.get('/petition', (req, res) => {
     //clean session  req.session = null
-
     res.render('petition', {
         layout: 'main',
         error: ''
@@ -54,31 +152,16 @@ app.get('/petition', (req, res) => {
 });
 
 app.post('/petition', (req, res) => {
-    //Sending information form the form to the Database
-
-    addUser(req.body.first, req.body.last, req.body.signature)
-        .then(({ rows }) => {
-      
-            //ID session of the user
-            req.session.userId = rows[0].id;
-
-            //Redirect to the Thanks route
-            res.redirect('/thanks');
-        })
+    saveSignature(req.body.signature, req.session.userId)
+        .then(() => res.redirect('/thanks'))
         .catch(err => {
-
-            //This displays a message when an error has happened
-            res.render('petition', {
-                layout: 'main',
-                error: 'Looks like you have an error, please fill all the information and sign before Submit'
-            });
             console.log(err);
+            res.redirect('/register');
         });
 });
 
 app.get('/thanks', (req, res) => {
     userInfo(req.session.userId).then(({ rows }) => {
-      
         const data = rows;
         res.render('thanks', {
             layout: 'main',
@@ -98,7 +181,7 @@ app.get('/signers', (req, res) => {
 });
 
 app.get('*', function(req, res) {
-    res.redirect('/petition');
+    res.redirect('/login');
 });
 
 app.listen(8080, () => console.log('server is listening'));

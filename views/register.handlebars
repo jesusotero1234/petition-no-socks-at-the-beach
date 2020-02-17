@@ -1,0 +1,51 @@
+<div id="register-container">
+
+</div>
+<form method="POST">
+
+    <div class="userInfo">
+    <p>{{error}}</p>
+        <div>
+            <p>First Name</p>
+            <input type="text" name="firstName" placeholder="First Name">
+        </div>
+
+
+        <div>
+            <p>Last Name</p>
+            <input type="text" name="lastName" placeholder="Last Name">
+        </div>
+
+        <div>
+            <p>Email</p>
+            <input type="text" name="email" placeholder="email">
+        </div>
+
+        <div>
+            <p>Password</p>
+            <input type="password" name="password" placeholder="password">
+        </div>
+    </div>
+
+
+
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+
+    <div id="button-register">
+
+        <button>Submit</button>
+    </div>
+</form>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+
+$('input[name="firstName"]').val('')
+$('input[name="lastName"]').val('')
+$('input[name="email"]').val('')
+$('input[name="password"]').val('')
+
+
+</script>
