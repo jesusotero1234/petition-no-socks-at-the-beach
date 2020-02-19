@@ -1,15 +1,21 @@
 <div id="signers-container">
     <p>Signers so far:</p>
 
-
+    {{#if render}}
+    
+<table>
     {{#rows}}
-    <table>
+    
         <tr>
             {{{showAnchorUser url fullname}}}
             <td>{{age}}</td>
-            <td><a href="/signers/{{city}}">{{city}}</td><a/>
+            <td><a href="/signers/{{city}}">{{city}}</td><a />
         </tr>
 
-    </table>
+   
     {{/rows}}
+     </table>
+    {{else}}
+    {{error}}
+    {{/if}}
 </div>

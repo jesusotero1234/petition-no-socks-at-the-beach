@@ -27,7 +27,11 @@ exports.saveSignature = function(signature,user_id) {
 //Retrieve UsersInfo
 exports.returnInfo = function() {
     return db.query(
-        `SELECT CONCAT(userInfo.firstName, ' ', userInfo.lastName) AS fullname , age, city, url FROM userInfo LEFT JOIN userProfiles  ON userInfo.id = userProfiles.user_id`
+        `SELECT CONCAT(userInfo.firstName, ' ', userInfo.lastName) AS fullname , age, city, url 
+         FROM userInfo 
+         LEFT JOIN userProfiles ON userInfo.id = userProfiles.user_id
+         JOIN signatures ON userInfo.id = signatures.user_id
+         `
     )
 }
 
@@ -58,9 +62,10 @@ exports.userProfile= (age,city,url,user_id)=>{
 //take users from City
 exports.usersFromCity = (city)=>{
     return db.query(
-        `SELECT firstName, lastName, age,city
-        FROM userInfo LEFT JOIN userProfiles 
-        ON userInfo.id = userProfiles.user_id 
+        `SELECT firstName, lastName , age, city, url 
+        FROM signatures 
+        LEFT JOIN userInfo ON signatures.user_id = userInfo.id  
+        LEFT JOIN userProfiles ON signatures.user_id = userProfiles.user_id
         WHERE LOWER(city)=$1`,[city]
     )
 }
@@ -77,7 +82,7 @@ exports.editUser= (id)=>{
 
 
 //Update user Profile when they edit it
-exports.editUserUpsert= (firstName, lastName, email, id)=>{
+exports.editUserNoPass= (firstName, lastName, email, id)=>{
 
     return db.query(
 
@@ -85,7 +90,15 @@ exports.editUserUpsert= (firstName, lastName, email, id)=>{
 
     )
 }  
-exports.editUserUpsert2= (age,city,url,id)=>{
+exports.editUserPass= (firstName, lastName, email, password, id)=>{
+
+    return db.query(
+
+        `UPDATE userInfo SET firstName = $1, LastName = $2, email= $3, password=$4 WHERE id = $5`, [firstName,lastName,email,password,id]
+
+    )
+}  
+exports.editUserUpsert= (age,city,url,id)=>{
     
     return db.query(
 
@@ -96,3 +109,10 @@ exports.editUserUpsert2= (age,city,url,id)=>{
     )
 }  
 
+exports.deleteSignature= (id)=>{
+    
+    return db.query(
+
+        `DELETE FROM signatures WHERE user_id=$1`,[id]
+    )
+}  

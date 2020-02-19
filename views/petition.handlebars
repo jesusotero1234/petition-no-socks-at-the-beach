@@ -1,29 +1,37 @@
 <div id="petition-container">
 
-<div id="petition-explain">
-<p>Please sign the petition to support the BAN of sandals with socks in the whole Germany</p>
-<p>After we reach 100K we will move on to the whole Europe!</p>
-<h1>LET'S FIGHT TOGETHER</h1>
-</div>
+    <div id="petition-explain">
+        <p>Please sign the petition to support the BAN of sandals with socks in the whole Germany</p>
+        <p>After we reach 100K we will move on to the whole Europe!</p>
+        <h1>LET'S FIGHT TOGETHER</h1>
+    </div>
     <form method="POST">
 
         <div class="names">
 
-        <input type="hidden" id="signature" name="signature">
-        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <input type="hidden" id="signature" name="signature">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
-        <div>
-            <canvas id="signatureCanvas" width="600" height="150" ></canvas>
+            <div>
+                <canvas id="signatureCanvas" width="600" height="150"></canvas>
 
-        </div>
+            </div>
 
-        <div id="button-containers">
-            <button id="resetSignature">Reset</button>
+            <div id="button-containers">
+                
 
-            <button>Submit</button>
-        </div>
+                <button>Submit</button>
+
+            </div>
     </form>
-
+    <button id="resetSignature">Reset</button>
+{{error}}
+    <div id="deleteSignature-container">
+        <form method="POST" action="/petition/deleteSignature">
+            <button name="deleteSignature" id="deleteSignature">Delete Signature</button>
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        </form>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="js/canvasSignature.js"></script>

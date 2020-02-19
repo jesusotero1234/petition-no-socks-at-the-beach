@@ -52,6 +52,7 @@ const drawCanvas = (Xstart, Ystart, Xend, Yend) => {
 
 //restart canvas
 $('#resetSignature').click((e) => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     e.preventDefault()
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    $('input[name="signature"]').val('');
 });

@@ -1,14 +1,16 @@
 <div id="signersCity-container">
-
-    {{#data}}
     <p>Signers so far in <b>{{city}}</b>:</p>
 
-    <table>
-
+    <div>
+          <table>
+    {{#data}}
+        <tr>
         <td>{{firstname}}</td>
         <td>{{lastname}}</td>
         <td>{{age}}</td>
-
-    </table>
+</tr>
+   
     {{/data}}
+     </table>
+    </div>
 </div>

@@ -248,3 +248,15 @@ td {
     letter-spacing: 1px;
     padding-bottom: 10px;
 }
+#deleteSignature{
+   background: none;
+   border: none;
+    color: blue;
+    text-decoration: underline;
+    font-size: large;
+}
+#deleteSignature-container{
+    position: absolute;
+    left:69%;
+    top: 102%;
+}
