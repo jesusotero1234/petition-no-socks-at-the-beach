@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS userProfiles;
+CREATE TABLE userProfiles(
+
+    id SERIAL PRIMARY KEY,
+    age VARCHAR,
+    city VARCHAR,
+    url VARCHAR,
+    user_id INT NOT NULL UNIQUE REFERENCES userInfo(id) ON DELETE CASCADE
+)

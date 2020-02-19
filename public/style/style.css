@@ -1,7 +1,7 @@
 header {
-    background-color:  #f1f3f4;
+    background-color: #f1f3f4;
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     align-items: center;
 }
 
@@ -9,64 +9,77 @@ body {
     margin: 0;
     background-color: #79bac1;
 }
-#petition-container{
+
+#petition-container {
     display: flex;
-     flex-direction:column;
+    flex-direction: column;
     justify-content: center;
-   
 }
+
 footer {
     background-color: #512b58;
-    position: relative;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     width: 100%;
-    
+    display: flex;
+justify-content: center;
+align-items: center;
 }
-#logo{
+
+#logo {
     width: 200px;
-    height: 200px; 
+    height: 200px;
 }
-#logo-container{
-    display:  flex;
-    justify-content:center;
+
+#logo-container {
+    display: flex;
+    justify-content: center;
     margin-top: 50px;
 }
-h1{
+
+h1 {
     display: block;
     font-family: 'Odibee Sans';
     letter-spacing: 4px;
 }
-p{
-   font-family: 'Prompt', sans-serif;
+
+p {
+    font-family: 'Prompt', sans-serif;
     letter-spacing: 4px;
 }
-form{
+
+form {
     display: flex;
-flex-direction: column;
-align-items: center;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
 }
-button{
+
+button {
     width: 100px;
     height: 25px;
     border-radius: 15%;
 }
-#button-containers{
+
+#button-containers {
     display: flex;
-    flex-direction:row-reverse;
-    justify-content:space-evenly;
+    flex-direction: row-reverse;
+    justify-content: space-evenly;
     width: 100%;
     margin-top: 30px;
 }
-.names{
-    display:  flex;
-    margin-top: 50px;
-}header {
-    background-color:  #f1f3f4;
+
+.names {
     display: flex;
-    flex-direction:column;
+    margin-top: 50px;
+}
+
+header {
+    background-color: #f1f3f4;
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
@@ -74,115 +87,164 @@ body {
     margin: 0;
     background-color: #79bac1;
 }
-#petition-container{
+
+#petition-container {
     display: flex;
-     flex-direction:column;
+    flex-direction: column;
     justify-content: center;
-   
 }
+
 footer {
     background-color: #512b58;
     text-align: center;
 }
-#logo{
+
+#logo {
     width: 200px;
-    height: 200px; 
+    height: 200px;
 }
-#logo-container{
-    display:  flex;
-    justify-content:center;
+
+#logo-container {
+    display: flex;
+    justify-content: center;
     margin-top: 50px;
 }
-h1{
+
+h1 {
     display: block;
     font-family: 'Odibee Sans';
     letter-spacing: 4px;
 }
-p{
-   font-family: 'Prompt', sans-serif;
+
+p {
+    font-family: 'Prompt', sans-serif;
     letter-spacing: 4px;
 }
-form{
+
+form {
     display: flex;
-flex-direction: column;
-align-items: center;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
 }
-button{
+
+button {
     width: 100px;
     height: 25px;
     border-radius: 15%;
+    margin: 10px;
 }
-#button-containers{
+
+#button-containers {
     display: flex;
-    flex-direction:row-reverse;
-    justify-content:space-evenly;
+    flex-direction: row-reverse;
+    justify-content: space-evenly;
     width: 100%;
     margin-top: 30px;
 }
-.names{
-    display:  flex;
+
+.names {
+    display: flex;
     margin-top: 50px;
 }
-.names>div{
+
+.names>div {
     margin-right: 50px;
 }
-#petition-explain{
+
+#petition-explain {
     text-align: center;
 }
-canvas{
-    border-style:dotted;
+
+canvas {
+    border-style: dotted;
 }
-#thanks{
+
+#thanks {
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
 }
-.names>div{
+
+.names>div {
     margin-right: 50px;
 }
-#petition-explain{
+
+#petition-explain {
     text-align: center;
 }
-canvas{
-    border-style:dotted;
+
+canvas {
+    border-style: dotted;
 }
-#thanks{
+
+#thanks {
     display: flex;
     flex-direction: column;
-   align-items: center;
+    align-items: center;
     text-align: center;
 }
-#link{
+
+#link {
     font-size: 50px;
 }
-#img-signature{
-    border-style:dashed;
+
+#img-signature {
+    border-style: dashed;
 }
-#footer-text{
+
+#footer-text {
     color: white;
     font-size: 20px;
 }
-#signers-container{
+
+#signers-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-#button-register{
+
+#button-register {
     margin-top: 30px;
 }
-.userInfo{
+
+.userInfo {
     margin-top: 30px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     width: 70%;
-    
 }
-.userInfo>div>input{
+
+.userInfo>div>input {
     -webkit-appearance: none;
-    background-color:transparent;
+    background-color: transparent;
     border: none;
     border-bottom: 2px solid black;
+}
+
+#signersCity-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+td {
+    font-family: 'Prompt', sans-serif;
+    letter-spacing: 4px;
+    padding-top: 10px; 
+    padding-left: 40px;
+}
+#links-container{
+    display: flex;
+    width: 100%;
+    flex-direction:row;
+    justify-content:space-evenly
+}
+#links-container>a{
+     text-decoration: none;
+     font-family: 'Prompt', sans-serif;
+    letter-spacing: 1px;
+    padding-bottom: 10px;
 }

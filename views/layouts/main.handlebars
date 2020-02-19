@@ -4,30 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="/style/style.css">
     <title>Document</title>
 </head>
 
 
 <header>
-    
 
 
-    <h1>Petition</h1>
+
+    <h1>👀 Petition 👀 </h1>
     <h1>Wear sandals without socks in the beach</h1>
+    <div id="links-container">
+        <a href="/login">Log in</a><a href="/petition">Sign the petition</a><a href="/signers">Signers</a><a href="/logout">Log out</a><a href="/profile/edit">Edit Profile</a>
+    </div>
 
 </header>
 
 <body>
-        <div id="logo-container">
-        <img src="img/logo.svg" alt="logo" id="logo">
+    <div id="logo-container">
+        <img src="/img/logo.svg" alt="logo" id="logo">
     </div>
 
     {{{body}}}
-<div style="height:100px"></div>
+    <div style="height:100px"></div>
 </body>
 
-<footer>
-<large id="footer-text">Copyright 2020, Ban Idiots Corporation 🤣</large>
+<footer style="height:50px">
+    <large id="footer-text">Copyright 2020, Ban Idiots Corporation 🤣</large>
 </footer>
+{{!-- <script>
+
+    document.querySelector('#logout').addEventListener('click', () => {
+        document.cookie = ''
+    })
+</script> --}}
+
 </html>

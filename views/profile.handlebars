@@ -1,0 +1,38 @@
+<div id="profile-container">
+
+
+    <form method="POST">
+
+        <div class="userProfile">
+
+            <div>
+                <p>Age</p>
+                <input type="text" name="age">
+            </div>
+
+
+            <div>
+                <p>City</p>
+                <input type="text" name="city">
+            </div>
+
+            <div>
+                <p>Homepage</p>
+                <input type="text" name="url">
+            </div>
+
+        </div>
+
+
+
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+
+        <div id="button-profile">
+
+            <button>Submit</button>
+        </div>
+    </form>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
