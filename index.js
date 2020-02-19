@@ -1,9 +1,9 @@
 const express = require('express');
-require('custom-env').env()
+require('custom-env').env() 
 const hb = require('express-handlebars');
 const cookieSession = require('cookie-session');
 const csurf = require('csurf');
-const secrets = require('./secrets.json');
+// const secrets = require('./secrets.json');
 const {
     addUserUserInfo,
     returnInfo,
@@ -30,7 +30,7 @@ app.use(express.static('./public'));
 //Cookie to check if the user haven't change data
 app.use(
     cookieSession({
-        secret: process.env.SECRETS || secrets.secret ,
+        secret: process.env.SECRETS  ,
         maxAge: 1000 * 60 * 60 * 24 * 14 //2 Weeks it will last the cookie, when it's over expire
     })
 );
