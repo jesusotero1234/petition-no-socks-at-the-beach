@@ -2,7 +2,7 @@ const spicePg = require('spiced-pg');
 
 
 
-const db = spicePg('postgres://postgres:postgres@localhost:5432/petition')
+const db = spicePg( process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/petition')
 
 
 //Insert User information
@@ -78,15 +78,11 @@ exports.editUser= (id)=>{
 
 //Update user Profile when they edit it
 exports.editUserUpsert= (firstName, lastName, email, id)=>{
-    
+
     return db.query(
 
         `UPDATE userInfo SET firstName = $1, LastName = $2, email= $3 WHERE id = $4`, [firstName,lastName,email,id]
 
-        // `INSERT INTO userInfo (firstName, LastName, email,password)
-        //  VALUES ($1,$2,$3,$4)
-        //  ON CONFLICT (password)
-        //  DO UPDATE SET firstName = $1, LastName = $2 ,email = $3;`,[firstName, LastName, email, password]
     )
 }  
 exports.editUserUpsert2= (age,city,url,id)=>{

@@ -29,7 +29,7 @@ app.use(express.static('./public'));
 //Cookie to check if the user haven't change data
 app.use(
     cookieSession({
-        secret: secrets.secret,
+        secret: secrets.secret ||process.env.SECRETS ,
         maxAge: 1000 * 60 * 60 * 24 * 14 //2 Weeks it will last the cookie, when it's over expire
     })
 );
