@@ -1,4 +1,5 @@
 const express = require('express');
+require('custom-env').env()
 const hb = require('express-handlebars');
 const cookieSession = require('cookie-session');
 const csurf = require('csurf');
