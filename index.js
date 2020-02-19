@@ -271,7 +271,7 @@ app.get('/profile/edit', function(req, res) {
 app.post('/profile/edit', function(req, res) {
     console.log(req.body);
 
-    
+
     editUserUpsert(
         req.body.firstName,
         req.body.lastName,
@@ -297,4 +297,4 @@ app.get('*', function(req, res) {
     res.redirect('/login');
 });
 
-app.listen(8080, () => console.log('server is listening'));
+app.listen(process.env.PORT||8080, () => console.log('server is listening'));
