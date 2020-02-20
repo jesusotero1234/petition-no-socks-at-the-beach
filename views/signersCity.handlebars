@@ -2,15 +2,23 @@
     <p>Signers so far in <b>{{city}}</b>:</p>
 
     <div>
-          <table>
-    {{#data}}
-        <tr>
-        <td>{{firstname}}</td>
-        <td>{{lastname}}</td>
-        <td>{{age}}</td>
-</tr>
-   
-    {{/data}}
-     </table>
+        <table>
+
+            <tr>
+                <td><b>First name</b></td>
+                <td><b>last name</b></td>
+                <td><b>age</b></td>
+            </tr>
+
+
+            {{#data}}
+            <tr>
+                <td>{{firstname}}</td>
+                <td>{{lastname}}</td>
+                <td>{{age}}</td>
+            </tr>
+
+            {{/data}}
+        </table>
     </div>
 </div>

@@ -7,6 +7,12 @@
 
     {{/data}}
 
+ <div id="deleteSignature-container" class="deleteSignature-container">
+        <form method="POST" action="/petition/deleteSignature">
+            <button name="deleteSignature" id="deleteSignature">Delete Signature</button>
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        </form>
+    </div>
 
 <p> now you can see how many people has signed in the link below</p>
 <a href="/signers" id="link">link</a>

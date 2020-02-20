@@ -4,7 +4,10 @@
 
         <div class="editProfile">
               <input type="hidden" name="_csrf" value="{{csrfToken}}">
-            <p>{{error}}</p>
+              <div id="error">
+                <p>{{error}}</p>
+              </div>
+            
             {{#data}}
           
             <div>
@@ -25,7 +28,7 @@
 
             <div>
                 <p>Password</p>
-                <input type="password" name="password" placeholder="password">
+                <input type="password" name="password" >
             </div>
 
             <div>
@@ -50,6 +53,13 @@
             {{/data}}
         </div>
     </form>
+
+     <div id="deleteSignature-container">
+        <form method="POST" action="/petition/deleteProfile">
+            <button name="deleteSignature" id="deleteSignature">Delete Profile</button>
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        </form>
+    </div>
 
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

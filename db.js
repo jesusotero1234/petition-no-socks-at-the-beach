@@ -46,7 +46,7 @@ exports.userInfo = function(id) {
 //LogIn
 exports.logIn =function(email) {
     return db.query(
-        `SELECT email,password,id FROM userInfo WHERE email=$1`,[email]
+        `SELECT email, password,id FROM userInfo WHERE email=$1`,[email]
     )
 }
 
@@ -116,3 +116,11 @@ exports.deleteSignature= (id)=>{
         `DELETE FROM signatures WHERE user_id=$1`,[id]
     )
 }  
+
+exports.deleteProfile= (id)=>{
+    
+    return db.query(
+
+        `DELETE FROM userInfo WHERE id=$1`,[id]
+    )
+} 

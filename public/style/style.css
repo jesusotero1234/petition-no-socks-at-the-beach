@@ -24,8 +24,8 @@ footer {
     right: 0;
     width: 100%;
     display: flex;
-justify-content: center;
-align-items: center;
+    justify-content: center;
+    align-items: center;
 }
 
 #logo {
@@ -233,30 +233,114 @@ canvas {
 td {
     font-family: 'Prompt', sans-serif;
     letter-spacing: 4px;
-    padding-top: 10px; 
+    padding-top: 10px;
     padding-left: 40px;
 }
-#links-container{
+
+#links-container {
     display: flex;
     width: 100%;
-    flex-direction:row;
-    justify-content:space-evenly
+    flex-direction: row;
+    justify-content: space-evenly
 }
-#links-container>a{
-     text-decoration: none;
-     font-family: 'Prompt', sans-serif;
+
+#links-container>a {
+    text-decoration: none;
+    font-family: 'Prompt', sans-serif;
     letter-spacing: 1px;
     padding-bottom: 10px;
 }
-#deleteSignature{
-   background: none;
-   border: none;
+
+#deleteSignature {
+    all: unset;
+    background: none;
+    border: none;
     color: blue;
     text-decoration: underline;
     font-size: large;
+    text-transform: uppercase;
+    transition: all 0.4s ease 0s;
 }
-#deleteSignature-container{
+
+#deleteSignature:hover {
+    background: transparent;
+    border: 2px solid black;
+    letter-spacing: 3px;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+    box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
+    transition: all 0.4s ease 0s;
+}
+
+#deleteSignature-container {
     position: absolute;
-    left:69%;
-    top: 102%;
+    left: 74%;
+    top: 143%;
+}
+
+#deleteSignature:hover {
+    cursor: pointer;
+    border: none;
+    box-shadow: none;
+}
+
+#resetSignature {
+    position: absolute;
+    top: 95.2%;
+    left: 82%;
+}
+
+button {
+    color: #fff !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #512b58;
+    padding: 20px;
+    border-radius: 5px;
+    border: none;
+    transition: all 0.4s ease 0s;
+    line-height: 1px;
+}
+
+button:hover {
+    background: transparent;
+    border: 2px solid black;
+    letter-spacing: 3px;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+    box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
+    transition: all 0.4s ease 0s;
+}
+
+input {
+    background: none;
+    border: none;
+    /* text-align: center; */
+    border-bottom: 1px solid #512b58;
+    color: #512b58;
+    font-family: 'Prompt', sans-serif;
+    letter-spacing: 3px;
+    font-size: large;
+    margin-left: 30px;
+}
+
+#petition-error {
+    position: absolute;
+    top: 116%;
+    left: 13%;
+    color: #ae2424ab;
+    font-family: 'Prompt', sans-serif;
+    letter-spacing: 3px;
+    font-size: large;
+}
+
+div>#error-register {
+    position: absolute;
+    top: 135%;
+    color: #992424;
+}
+#noAccount{
+    margin: 20px;
+    font-family: 'Prompt', sans-serif;
+letter-spacing: 4px;
 }

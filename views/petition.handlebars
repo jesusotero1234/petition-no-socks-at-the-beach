@@ -18,20 +18,19 @@
             </div>
 
             <div id="button-containers">
-                
+
 
                 <button>Submit</button>
 
             </div>
     </form>
+
+
     <button id="resetSignature">Reset</button>
-{{error}}
-    <div id="deleteSignature-container">
-        <form method="POST" action="/petition/deleteSignature">
-            <button name="deleteSignature" id="deleteSignature">Delete Signature</button>
-            <input type="hidden" name="_csrf" value="{{csrfToken}}">
-        </form>
+    <div id="petition-error">
+        {{error}}
     </div>
+
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="js/canvasSignature.js"></script>

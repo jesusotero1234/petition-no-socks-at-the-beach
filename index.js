@@ -15,13 +15,18 @@ const {
     editUserNoPass,
     editUserPass,
     editUserUpsert,
-    deleteSignature
+    deleteSignature,
+    deleteProfile
 } = require('./db'); //?
 const { hash, compare } = require('./utils/bCrypts');
-const { url } = require('./public/js/functions.js');
-// const { showUserInEditProfile } = require('./public/js/editUser');
-const app = express();
+const { url, checkEmail } = require('./public/js/functions.js');
 
+
+
+
+
+const app = express();
+exports.app = app;
 let logged = false;
 
 app.engine('handlebars', hb());
@@ -47,14 +52,30 @@ app.use(
 app.use(csurf());
 //Using the cookie to see if we have to redirect or can show the info
 app.use(function(req, res, next) {
-    if (
-        Object.keys(req.session).length == 1 &&
-        Object.keys(req.session) == 'csrfSecret' &&
-        req.url != '/register' &&
-        req.url != '/login' &&
-        req.url != '/profile'
-    ) {
+    if (!req.session.userId && req.url != '/register' && req.url != '/login') {
+
         res.redirect('/register');
+        // if (
+           
+        //     !req.session.userId &&
+        //     req.url != '/register' &&
+        //     req.url != '/login'
+        // ) {
+        //     res.redirect('/register');
+    } else if (
+        !req.session.userId &&
+        req.url == '/login'
+    ) {
+        console.log('entered')
+        res.locals.csrfToken = req.csrfToken();
+        next()
+    }else if (
+        req.session.userId &&
+        req.url == '/register' ||
+        req.url == '/login'
+    ) {
+        console.log('entered')
+        res.redirect('/petition');
     } else {
         res.locals.csrfToken = req.csrfToken();
         next();
@@ -73,15 +94,26 @@ app.post('/register', (req, res) => {
         req.body.firstName.trim().length == 0 ||
         req.body.lastName == 0 ||
         req.body.email == 0 ||
-        req.body.password == 0
+        req.body.password == 0 || req.body.password.length <=7
     ) {
         res.render('register', {
             layout: 'main',
             error:
-                'Looks like you have an error, please fill all the information and sign before Submit'
+                'Looks like you have an error, please fill all the information and sign before Submit, password should contain at least 8 character'
         });
         return;
     }
+
+    if(!checkEmail(req.body.email)){
+        res.render('register', {
+            layout: 'main',
+            error:
+            'Looks like you have an error, please fill all the information and sign before Submit, password should contain at least 8 character'
+        });
+        return;
+    }
+
+
     //hash it
     hash(req.body.password)
         .then(hashedpass => {
@@ -102,7 +134,7 @@ app.post('/register', (req, res) => {
                     res.render('register', {
                         layout: 'main',
                         error:
-                            'Looks like you have an error, please fill all the information and sign before Submit'
+                            'Looks like you have an error, please fill correct all the information before Submit'
                     });
                     return;
                 });
@@ -114,6 +146,9 @@ app.post('/register', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
+
+    req.session
+    
     res.render('login', {
         layout: 'main',
         error: '',
@@ -122,15 +157,22 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    //compare the password and look with the email and Id
-
+        
+    ///if password doesn't match  render error
     if (
         req.body.email.trim().length > 0 &&
         req.body.password.trim().length > 0
     ) {
-        // console.log(req.body.email)
+        console.log(req.body.email);
+
         logIn(req.body.email)
             .then(({ rows }) => {
+                if (rows.length <= 0) {
+                    res.render('login', {
+                        layout: 'main',
+                        error: 'Your username or password is incorrect'
+                    });
+                }
                 compare(req.body.password, rows[0].password)
                     .then(boolean => {
                         if (boolean) {
@@ -143,7 +185,9 @@ app.post('/login', (req, res) => {
                                         res.redirect('/thanks');
                                     }
                                 })
-                                .catch(err => console.log(err));
+                                .catch(err => {
+                                    console.log(err);
+                                });
                         } else {
                             res.render('login', {
                                 layout: 'main',
@@ -154,7 +198,8 @@ app.post('/login', (req, res) => {
                     })
                     .catch(err => {
                         console.log(err);
-                    });
+                    })
+                    .catch(() => console.log('incorrect password'));
             })
             .catch(err => console.log(err));
     } else {
@@ -166,28 +211,37 @@ app.post('/login', (req, res) => {
 });
 
 app.get('/petition', (req, res) => {
-    //clean session  req.session = null
-    res.render('petition', {
-        layout: 'main',
-        error: '',
-        logged: true
+    userInfo(req.session.userId).then(({ rows }) => {
+        // console.log(req.session);
+        if (rows.length > 0) {
+            res.redirect('/thanks');
+        } else {
+            res.render('petition', {
+                layout: 'main',
+                error: '',
+                logged: true
+            });
+        }
     });
+
+    //clean session  req.session = null
 });
 
 app.post('/petition', (req, res) => {
     //check if the user tries to save another signature without deleting the previous one
     userInfo(req.session.userId).then(({ rows }) => {
-        if (rows.length == 0 && req.body.signature.trim().length>0) {
+        if (rows.length == 0 && req.body.signature.trim().length > 0) {
             saveSignature(req.body.signature, req.session.userId)
                 .then(() => res.redirect('/thanks'))
                 .catch(err => {
                     console.log(err);
                     res.redirect('/register');
                 });
-        }else{
+        } else {
             res.render('petition', {
                 layout: 'main',
-                error: 'Error, please delete your current signature before saving a new one.    ',
+                error:
+                    'Error, please delete your current signature before saving a new one.    ',
                 logged: true
             });
         }
@@ -203,6 +257,20 @@ app.post('/petition/deleteSignature', (req, res) => {
         .catch(err => {
             console.log(err);
             res.redirect('/petition');
+        });
+});
+
+app.post('/petition/deleteProfile', (req, res) => {
+    deleteProfile(req.session.userId)
+        .then(() => {
+            console.log('succed deleting profile');
+            req.session = null
+            res.redirect('/register');
+        })
+        .catch(err => {
+            console.log(err);
+            req.session = null
+            res.redirect('/login');
         });
 });
 
@@ -223,53 +291,52 @@ app.get('/thanks', (req, res) => {
 
 app.get('/signers', (req, res) => {
     //destructuring data
-
-    returnInfo()
-        .then(({ rows }) => {
-            if (rows.length == 0) {
-                res.render('signers', {
-                    layout: 'main',
-                    error: 'No Signers has signed the petition',
-                    rows,
-                    render: false,
-                    logged: true
-                });
-            } else {
-                console.log('entered');
-                res.render('signers', {
-                    layout: 'main',
-                    error: '',
-                    rows,
-                    logged: true,
-                    render: true,
-                    helpers: {
-                        showAnchorUser(url, name) {
-                            if (url == null) {
-                                return `<td>${name}<td/>`;
+    userInfo(req.session.userId).then(({ rows }) => {
+        if (Object.keys(rows).length == 0) {
+            res.redirect('/petition');
+        } else {
+            returnInfo()
+                .then(({ rows }) => {
+                    console.log(rows);
+                    if (rows.length == 0) {
+                        res.render('signers', {
+                            layout: 'main',
+                            error: 'No Signers has signed the petition',
+                            rows,
+                            render: false,
+                            logged: true
+                        });
+                    } else {
+                        console.log('entered');
+                        res.render('signers', {
+                            layout: 'main',
+                            error: '',
+                            rows,
+                            logged: true,
+                            render: true,
+                            helpers: {
+                                showAnchorUser(url, name) {
+                                    if (url == null) {
+                                        return `<td>${name}</td>`;
+                                    }
+                                    if (url.trim().length == 0) {
+                                        return `<td>${name}</td>`;
+                                    } else {
+                                        return `<td><a href="${url}" target="_blank">${name}</a></td>`;
+                                    }
+                                }
                             }
-                            if (url.trim().length == 0) {
-                                return `<td>${name}<td/>`;
-                            } else {
-                                return `<td><a href="${url}">${name}</td></a>`;
-                            }
-                        }
+                        });
                     }
+                })
+                .catch(err => {
+                    console.log(err);
                 });
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            // res.render('signers', {
-            //     layout: 'main',
-            //     error: 'No Signers yet',
-            //     logged:true,
-
-            // });
-        });
+        }
+    });
 });
 
 app.get('/profile', (req, res) => {
-    console.log(req.session);
     res.render('profile', {
         layout: 'main',
         logged: true
@@ -332,7 +399,20 @@ app.get('/profile/edit', function(req, res) {
 
 app.post('/profile/edit', function(req, res) {
     //if wants to change password
-    if (req.body.password.trim().length > 0) {
+    if (req.body.password.trim().length <=7) {
+
+        if(!checkEmail(req.body.email)){
+            editUser(req.session.userId).then(({ rows }) => {
+                const data = rows[0];
+                res.render('edit', {
+                    data,
+                    logged: true,
+                    error: 'Your Email is not valid'
+                });
+            });
+            return
+        }
+
         hash(req.body.password)
             .then(hashedpass => {
                 editUserPass(
@@ -347,7 +427,7 @@ app.post('/profile/edit', function(req, res) {
                         editUserUpsert(
                             req.body.age,
                             req.body.city,
-                            req.body.url,
+                            url(req.body.url),
                             req.session.userId
                         )
                             .then(() => {
@@ -360,6 +440,19 @@ app.post('/profile/edit', function(req, res) {
             })
             .catch(err => console.log(err));
     } else {
+
+        if(!checkEmail(req.body.email)){
+            editUser(req.session.userId).then(({ rows }) => {
+                const data = rows[0];
+                res.render('edit', {
+                    data,
+                    logged: true,
+                    error: 'Your Email is not valid'
+                });
+            });
+            return
+        }
+
         editUserNoPass(
             req.body.firstName,
             req.body.lastName,
@@ -371,7 +464,7 @@ app.post('/profile/edit', function(req, res) {
                 editUserUpsert(
                     req.body.age,
                     req.body.city,
-                    req.body.url,
+                    url(req.body.url)   ,
                     req.session.userId
                 )
                     .then(() => {
@@ -388,4 +481,8 @@ app.get('*', function(req, res) {
     res.redirect('/login');
 });
 
-app.listen(process.env.PORT || 8080, () => console.log('server is listening'));
+if (require.main == module) {
+    app.listen(process.env.PORT || 8080, () =>
+        console.log('server is listening')
+    );
+}
