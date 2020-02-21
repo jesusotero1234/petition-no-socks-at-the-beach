@@ -19,7 +19,7 @@ const {
     deleteProfile
 } = require('./db'); //?
 const { hash, compare } = require('./utils/bCrypts');
-const { url, checkEmail } = require('./public/js/functions.js');
+const { url, checkEmail, ageCheck } = require('./public/js/functions.js');
 
 
 
@@ -82,6 +82,32 @@ app.use(function(req, res, next) {
     }
 });
 
+app.use(function (req,res,next){
+
+
+    //This is, if the person tries to not use a number in age
+    if(req.body.age && req.url == '/profile' && isNaN(req.body.age)){
+        res.render('profile', {
+            layout: 'main',
+            logged: true,
+            error: 'the age is not correct please check'
+        });
+    }else if(req.body.age && req.url == '/profile/edit' && isNaN(req.body.age)){
+        editUser(req.session.userId).then(({ rows }) => {
+            const data = rows[0];
+            res.render('edit', {
+                data,
+                logged: true,
+                error: 'Your Age is not valid'
+            });
+        });
+        return
+    }
+    else{next()}
+
+
+})
+
 app.get('/register', (req, res) => {
     res.render('register', {
         layout: 'main',
@@ -94,7 +120,7 @@ app.post('/register', (req, res) => {
         req.body.firstName.trim().length == 0 ||
         req.body.lastName == 0 ||
         req.body.email == 0 ||
-        req.body.password == 0 || req.body.password.length <=7
+        req.body.password == 0 || req.body.password.length <=7 
     ) {
         res.render('register', {
             layout: 'main',
@@ -350,10 +376,14 @@ app.post('/profile', (req, res) => {
         req.body.url.trim().length == 0
     ) {
         res.redirect('/petition');
-    } else {
+    } 
+    
+    else {
+
         console.log('url', url(req.body.url.trim()));
+        console.log(ageCheck(req.body.age.trim()))
         userProfile(
-            req.body.age.trim(),
+            ageCheck(req.body.age.trim()),
             req.body.city.trim(),
             url(req.body.url.trim()),
             req.session.userId

@@ -20,5 +20,5 @@ exports.url = str => {
 
 const checkEmail = (exports.checkEmail = str =>  validator.validate(str));
 
-checkEmail('hola@gmail.com')
-checkEmail('hola')
+
+const ageCheck = exports.ageCheck = (str)=> (parseInt(str))

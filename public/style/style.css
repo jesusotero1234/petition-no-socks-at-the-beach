@@ -336,11 +336,22 @@ input {
 
 div>#error-register {
     position: absolute;
-    top: 135%;
+    top: 89%;
     color: #992424;
 }
-#noAccount{
+
+#noAccount {
     margin: 20px;
     font-family: 'Prompt', sans-serif;
-letter-spacing: 4px;
+    letter-spacing: 4px;
+}
+
+#profile-error {
+    margin: 20px;
+    font-family: 'Prompt', sans-serif;
+    letter-spacing: 4px;
+    color: #992424;
+}
+#error{
+    color: #992424;
 }
