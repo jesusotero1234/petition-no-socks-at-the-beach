@@ -273,9 +273,10 @@ td {
 }
 
 #deleteSignature-container {
-    position: absolute;
-    left: 74%;
-    top: 103%;
+    position: relative;
+    /* left: 74%;
+    top: 103%; */
+    margin-top: 1%;
 }
 
 #deleteSignature:hover {
@@ -285,9 +286,10 @@ td {
 }
 
 #resetSignature {
-    position: absolute;
-    top: 95.2%;
-    left: 82%;
+    position: relative;
+    /* top: 95.2%;
+    left: 82%; */
+    margin-top: 33%;
 }
 
 button {
